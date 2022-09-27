@@ -4,6 +4,7 @@ public class TablaProcesos {
 
 	private int proceso = 5;
 
+	// GETTERS AND SETTERS
 	public int getProceso() {
 		return proceso;
 	}
@@ -20,12 +21,16 @@ public class TablaProcesos {
 		this.tabla = tabla;
 	}
 
+	// METODO PARA AGREGAR LOS PROCESOS A LA TABLA
+
 	public void agregar(Procesos a, Procesos b, Procesos c, Procesos d) {
 		tabla[0] = a;
 		tabla[1] = b;
 		tabla[2] = c;
 		tabla[3] = d;
 	}
+
+	// ORDENA LA TABLA DE MENOR A MAYOR SEGÚN LA COLUMNA DEL PROCESO
 
 	public void ordenar(int columna) {
 
@@ -53,6 +58,9 @@ public class TablaProcesos {
 
 	}
 
+	// VALIDA CADA SEGUNDO SÍ EXISTE UN PROCESO NUEVO Y SÍ SU TIEMPO DE CPU
+	// ES MENOR AL PROCESO ACTUA
+
 	public boolean validarProcesoNuevo(int i) {
 		int columna = 1;
 		boolean cond = false;
@@ -75,6 +83,7 @@ public class TablaProcesos {
 
 			}
 		}
+		// VALIDA SÍ EL PROCESO ACTUAL LLEGÓ A CERO
 		if (c[2] == 0) {
 			cond = true;
 		} else {
@@ -83,6 +92,8 @@ public class TablaProcesos {
 		return cond;
 
 	}
+	// DESPUÉS DE QUE UN PROCESO LLEGA A CERO ESTE MÉTODO VALIDA
+	// CUAL ES EL QUE TIENE MENOR TIEMPO DE CPU Y LO EJECUTA
 
 	public void validarProcesoMasCorto(boolean x, int y) {
 
@@ -116,9 +127,9 @@ public class TablaProcesos {
 
 	}
 
+	// INICIA EL PRIMER PROCESO EN LLEGAR
 	public void iniciar(int i) {
 		int columna = 1;
-
 
 		int uno[] = tabla[0].getProceso();
 		int dos[] = tabla[1].getProceso();
@@ -126,7 +137,6 @@ public class TablaProcesos {
 		int cuatro[] = tabla[3].getProceso();
 
 		int a[] = { uno[columna], dos[columna], tres[columna], cuatro[columna] };
-		
 
 		if (a[0] == i) {
 			this.proceso = 0;
@@ -134,6 +144,7 @@ public class TablaProcesos {
 
 	}
 
+	// REDUCE EL TIEMPO DE CPU DEL PROCESO ACTUAL
 	public void reducirTiempoCPU(int proceso) {
 		int temp[] = tabla[proceso].getProceso();
 
@@ -141,7 +152,7 @@ public class TablaProcesos {
 	}
 
 	public void imprimir(Procesos x[]) {
-
+		System.out.println("   n° " + "TLlegada " + "TCPU " + "TEspera " + "TRespuesta");
 		for (int j = 0; j < x.length; j++) {
 			int y[] = x[j].getProceso();
 			System.out.println();
