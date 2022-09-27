@@ -29,15 +29,11 @@ public class ejecutar {
 				tablaProcesos.iniciar(i);
 				i++;
 				boolean cond = false;
-				if (tablaProcesos.getProceso() == 5) {// EL PROCESO ACTUAL NO
-														// EXISTE, 5
-														// ES PARA QUE NO
-														// REDUZCA NINGUNO,
-														// ES UN MECANISMO DE
-														// CONTROL
-														// MIENTRAS INGRESA EL
-														// PRIMER
-														// PROCESO
+				if (tablaProcesos.getProceso() == 5) {
+
+					// EL PROCESO ACTUAL NO EXISTE, 5 ES PARA QUE NO REDUZCA
+					// NINGUNO,ES UN MECANISMO DE CONTROL MIENTRAS INGRESA EL
+					// PRIMER PROCESO
 
 					tablaProcesos.imprimir(tablaProcesos.getTabla());
 
@@ -50,10 +46,6 @@ public class ejecutar {
 					// CON MENOR
 					// TIEMPO DE CPU SE HA INICIADO
 
-					int procesoActual = tablaProcesos.getProceso(); // RECUPERA
-																	// EL
-																	// PROCESO
-																	// ACTUAL
 					tablaProcesos.reducirTiempoCPU(tablaProcesos.getProceso()); // REDUCE
 																				// EL
 																				// TIEMPO
@@ -71,34 +63,28 @@ public class ejecutar {
 																	// ACTUAL
 																	// LLEGO A
 																	// CERO
+
 					tablaProcesos.imprimir(tablaProcesos.getTabla()); // IMPRIME
 					tablaProcesos.validarProcesoMasCorto(cond, i); // EN CASO DE
 					boolean x = tablaProcesos.terminar();
+					//
+					//
+					//
+					//
+					//
 					if (x == true) {
-						cancel();// QUE
+						cancel();// QUE validarProcesoNuevo SEA TRUE SIGNIFICA
+									// QUE EL
+						// PROCESO ACTUAL LLEGO A CERO Y PROCEDE A INICIAR EL
+						// PROCESO
+						// CON MENOR TIEMPO DE CPU
+
 					}
 					tablaProcesos.tiempoEspera(i);
 					tablaProcesos.tiempoRespuesta();
-					// validarProcesoNuevo
-					// SEA TRUE
-					// SIGNIFICA
-					// QUE EL
-					// PROCESO
-					// ACTUAL
-					// LLEGO A
-					// CERO Y
-					// PROCEDE A
-					// INICIAR
-					// EL
-					// PROCESO
-					// CON MENOR
-					// TIEMPO DE
-					// CPU
-					// tablaProcesos.finales(i);
 
 					System.out.println();
 					System.out.println("i:  " + i);
-					System.out.println("Proceso Actual:   " + procesoActual);
 
 				}
 
