@@ -3,6 +3,7 @@ public class TablaProcesos {
 	private Procesos tabla[] = new Procesos[4];
 
 	private int proceso = 5;
+	private int cpuUno, cpuDos, cpuTres, cpuCuatro;
 
 	// GETTERS AND SETTERS
 	public int getProceso() {
@@ -33,7 +34,6 @@ public class TablaProcesos {
 	// ORDENA LA TABLA DE MENOR A MAYOR SEGÚN LA COLUMNA DEL PROCESO
 
 	public void ordenar(int columna) {
-
 		int uno[] = tabla[0].getProceso();
 		int dos[] = tabla[1].getProceso();
 		int tres[] = tabla[2].getProceso();
@@ -58,13 +58,24 @@ public class TablaProcesos {
 
 	}
 
+	public void datosCPU() {
+		int uno[] = tabla[0].getProceso();
+		int dos[] = tabla[1].getProceso();
+		int tres[] = tabla[2].getProceso();
+		int cuatro[] = tabla[3].getProceso();
+
+		cpuUno = uno[2];
+		cpuDos = dos[2];
+		cpuTres = tres[2];
+		cpuCuatro = cuatro[2];
+	}
+
 	// VALIDA CADA SEGUNDO SÍ EXISTE UN PROCESO NUEVO Y SÍ SU TIEMPO DE CPU
 	// ES MENOR AL PROCESO ACTUA
 
 	public boolean validarProcesoNuevo(int i) {
 		int columna = 1;
 		boolean cond = false;
-
 		int uno[] = tabla[0].getProceso();
 		int dos[] = tabla[1].getProceso();
 		int tres[] = tabla[2].getProceso();
@@ -96,7 +107,6 @@ public class TablaProcesos {
 	// CUAL ES EL QUE TIENE MENOR TIEMPO DE CPU Y LO EJECUTA
 
 	public void validarProcesoMasCorto(boolean x, int y) {
-
 		int uno[] = tabla[0].getProceso();
 		int dos[] = tabla[1].getProceso();
 		int tres[] = tabla[2].getProceso();
@@ -130,7 +140,6 @@ public class TablaProcesos {
 	// INICIA EL PRIMER PROCESO EN LLEGAR
 	public void iniciar(int i) {
 		int columna = 1;
-
 		int uno[] = tabla[0].getProceso();
 		int dos[] = tabla[1].getProceso();
 		int tres[] = tabla[2].getProceso();
@@ -149,6 +158,88 @@ public class TablaProcesos {
 		int temp[] = tabla[proceso].getProceso();
 
 		temp[2]--;
+	}
+
+	public boolean terminar() {
+		boolean cond = false;
+		int columna = 2;
+		int uno[] = tabla[0].getProceso();
+		int dos[] = tabla[1].getProceso();
+		int tres[] = tabla[2].getProceso();
+		int cuatro[] = tabla[3].getProceso();
+
+		int a[] = { uno[columna], dos[columna], tres[columna], cuatro[columna] };
+
+		if (a[0] == 0) {
+			if (a[1] == 0) {
+				if (a[2] == 0) {
+					if (a[3] == 0) {
+						cond = true;
+					}
+				}
+			}
+		}
+		return cond;
+	}
+	// TIEMPO DE ESPERA: TIEMPO EN EL CUAL EL PROCESO ESTA EN PAUSA
+
+	public void tiempoEspera(int i) {
+		int columna = 1;
+		int uno[] = tabla[0].getProceso();
+		int dos[] = tabla[1].getProceso();
+		int tres[] = tabla[2].getProceso();
+		int cuatro[] = tabla[3].getProceso();
+
+		int a[] = { uno[columna], dos[columna], tres[columna], cuatro[columna] };
+		columna++;
+		int b[] = { uno[columna], dos[columna], tres[columna], cuatro[columna] };
+		columna++;
+		int c[] = { uno[columna], dos[columna], tres[columna], cuatro[columna] };
+		for (int j = 0; j < c.length; j++) {
+			if (a[j] <= i && b[j] != 0 && proceso != j) {
+				if (j == 0) {
+					uno[columna]++;
+				}
+				if (j == 1) {
+					dos[columna]++;
+				}
+				if (j == 2) {
+					tres[columna]++;
+				}
+				if (j == 3) {
+					cuatro[columna]++;
+				}
+			}
+		}
+
+	}
+	// TIEMPO DE EJECUCIÓN + TIEMPO DE ESPERA = TIEMPO DE RESPUESTA
+
+	public void tiempoRespuesta() {
+		int columna = 4;
+		int uno[] = tabla[0].getProceso();
+		int dos[] = tabla[1].getProceso();
+		int tres[] = tabla[2].getProceso();
+		int cuatro[] = tabla[3].getProceso();
+
+		int a[] = { uno[columna - 1], dos[columna - 1], tres[columna - 1], cuatro[columna - 1] };
+
+		for (int i = 0; i < a.length; i++) {
+			if (i == 0) {
+				uno[columna] = a[i] + cpuUno;
+
+			}
+			if (i == 1) {
+				dos[columna] = a[i] + cpuDos;
+			}
+			if (i == 2) {
+				tres[columna] = a[i] + cpuTres;
+			}
+			if (i == 3) {
+				cuatro[columna] = a[i] + cpuCuatro;
+			}
+		}
+
 	}
 
 	public void imprimir(Procesos x[]) {
