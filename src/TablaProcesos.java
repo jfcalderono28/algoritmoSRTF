@@ -1,4 +1,6 @@
 
+import javax.swing.JTable;
+
 public class TablaProcesos {
 	private Procesos tabla[] = new Procesos[4];
 
@@ -31,7 +33,7 @@ public class TablaProcesos {
 		tabla[3] = d;
 	}
 
-	// ORDENA LA TABLA DE MENOR A MAYOR SEGÚN LA COLUMNA DEL PROCESO
+	// ORDENA LA TABLA DE MENOR A MAYOR SEGï¿½N LA COLUMNA DEL PROCESO
 
 	public void ordenar(int columna) {
 		int uno[] = tabla[0].getProceso();
@@ -70,12 +72,12 @@ public class TablaProcesos {
 		cpuCuatro = cuatro[2];
 	}
 
-	// VALIDA CADA SEGUNDO SÍ EXISTE UN PROCESO NUEVO Y SÍ SU TIEMPO DE CPU
+	// VALIDA CADA SEGUNDO Sï¿½ EXISTE UN PROCESO NUEVO Y Sï¿½ SU TIEMPO DE CPU
 	// ES MENOR AL PROCESO ACTUA
 
-	public boolean validarProcesoNuevo(int i) {
+	public void validarProcesoNuevo(int i) {
 		int columna = 1;
-		boolean cond = false;
+		
 		int uno[] = tabla[0].getProceso();
 		int dos[] = tabla[1].getProceso();
 		int tres[] = tabla[2].getProceso();
@@ -90,21 +92,40 @@ public class TablaProcesos {
 				if (a[j2] == i && c[2] > b[j2]) {
 					this.proceso = j2;
 
+					System.out.println("Validar proceso nuevo");
+
 				}
 
 			}
 		}
-		// VALIDA SÍ EL PROCESO ACTUAL LLEGÓ A CERO
-		if (c[2] == 0) {
-			cond = true;
-		} else {
-			cond = false;
-		}
-		return cond;
+		// VALIDA Sï¿½ EL PROCESO ACTUAL LLEGï¿½ A CERO
+		
 
 	}
-	// DESPUÉS DE QUE UN PROCESO LLEGA A CERO ESTE MÉTODO VALIDA
-	// CUAL ES EL QUE TIENE MENOR TIEMPO DE CPU Y LO EJECUTA
+
+    public boolean validaCero() {
+        int columna = 1;
+        boolean cond = false;
+
+        int uno[] = tabla[0].getProceso();
+        int dos[] = tabla[1].getProceso();
+        int tres[] = tabla[2].getProceso();
+        int cuatro[] = tabla[3].getProceso();
+        
+        int c[] = tabla[this.proceso].getProceso();
+        
+        
+        if (c[2] == 0) {
+            cond = true;
+
+        } else {
+            cond = false;
+
+        }
+        return cond;
+    }
+    // DESPUï¿½S DE QUE UN PROCESO LLEGA A CERO ESTE Mï¿½TODO VALIDA
+    // CUAL ES EL QUE TIENE MENOR TIEMPO DE CPU Y LO EJECUTA
 
 	public void validarProcesoMasCorto(boolean x, int y) {
 		int uno[] = tabla[0].getProceso();
@@ -127,40 +148,45 @@ public class TablaProcesos {
 						if (b[j] < procesoCorto) {
 							procesoCorto = b[j];
 							this.proceso = j;
+							System.out.println("Proceso mï¿½s corto");
 
 						}
 					}
 				}
-			}
 
-		}
+            }
 
-	}
+        }
 
-	// INICIA EL PRIMER PROCESO EN LLEGAR
-	public void iniciar(int i) {
-		int columna = 1;
-		int uno[] = tabla[0].getProceso();
-		int dos[] = tabla[1].getProceso();
-		int tres[] = tabla[2].getProceso();
-		int cuatro[] = tabla[3].getProceso();
+    }
 
-		int a[] = { uno[columna], dos[columna], tres[columna], cuatro[columna] };
+    // INICIA EL PRIMER PROCESO EN LLEGAR
+    public void iniciar(int i) {
+        int columna = 1;
+        int uno[] = tabla[0].getProceso();
+        int dos[] = tabla[1].getProceso();
+        int tres[] = tabla[2].getProceso();
+        int cuatro[] = tabla[3].getProceso();
 
-		if (a[0] == i) {
-			this.proceso = 0;
-		}
+        int a[] = {uno[columna], dos[columna], tres[columna], cuatro[columna]};
 
-	}
+        if (a[0] == i) {
+            this.proceso = 0;
+        }
 
-	// REDUCE EL TIEMPO DE CPU DEL PROCESO ACTUAL
-	public void reducirTiempoCPU(int proceso) {
-		int temp[] = tabla[proceso].getProceso();
+    }
 
-		temp[2]--;
-	}
+    // REDUCE EL TIEMPO DE CPU DEL PROCESO ACTUAL
+    public void reducirTiempoCPU(int proceso) {
 
-	public boolean terminar() {
+        int temp[] = tabla[proceso].getProceso();
+        if (temp[2] > 0) {
+            temp[2]--;
+
+        }
+    }
+
+    public boolean terminar() {
 		boolean cond = false;
 		int columna = 2;
 		int uno[] = tabla[0].getProceso();
@@ -213,7 +239,7 @@ public class TablaProcesos {
 		}
 
 	}
-	// TIEMPO DE EJECUCIÓN + TIEMPO DE ESPERA = TIEMPO DE RESPUESTA
+	// TIEMPO DE EJECUCIï¿½N + TIEMPO DE ESPERA = TIEMPO DE RESPUESTA
 
 	public void tiempoRespuesta() {
 		int columna = 4;
@@ -243,12 +269,25 @@ public class TablaProcesos {
 	}
 
 	public void imprimir(Procesos x[]) {
-		System.out.println("   n° " + "TLlegada " + "TCPU " + "TEspera " + "TRespuesta");
+		System.out.println("   n " + "TLlegada " + "TCPU " + "TEspera " + "TRespuesta");
 		for (int j = 0; j < x.length; j++) {
 			int y[] = x[j].getProceso();
 			System.out.println();
 			for (int k = 0; k < y.length; k++) {
 				System.out.print("[  " + y[k] + "  ]");
+			}
+		}
+
+	}
+
+	public void imprimir(Procesos x[], JTable tabla) {
+
+		for (int j = 0; j < x.length; j++) {
+			int y[] = x[j].getProceso();
+
+			for (int k = 0; k < y.length; k++) {
+				tabla.setValueAt(y[k], j, k);
+
 			}
 		}
 
